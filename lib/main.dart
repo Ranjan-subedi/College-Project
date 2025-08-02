@@ -1,5 +1,4 @@
-
-import 'package:chat/pages/log_in.dart';
+import 'package:chat/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'services/firebase_options.dart';
@@ -36,7 +35,7 @@ class _MainAppState extends State<MainApp> {
     {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LogInPage()),
+        MaterialPageRoute(builder: (context) => Wrapper()),
       );
     }
   }

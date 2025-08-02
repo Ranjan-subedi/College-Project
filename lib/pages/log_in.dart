@@ -1,3 +1,5 @@
+import 'package:chat/homepage.dart';
+import 'package:chat/pages/reset.dart';
 import 'package:chat/pages/sign_up.dart';
 import 'package:chat/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
@@ -15,12 +17,26 @@ class _LogInPageState extends State<LogInPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool obscureText = false;
 
   FirebaseServices firebaseServices = FirebaseServices();
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: 
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Application",
+            style: TextStyle(
+            fontSize: 24,
+            letterSpacing: 1.7,
+            fontWeight: FontWeight.bold,
+          ),),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: 
     Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,10 +81,37 @@ class _LogInPageState extends State<LogInPage> {
               },
               controller: passwordController,
               decoration: InputDecoration(
+                suffixIcon: InkWell(
+                    child: obscureText ? Icon(Icons.visibility_off): Icon(Icons.visibility),
+                onTap: (){
+                      setState(() {
+                        obscureText =! obscureText;
+                      });
+                },
+                ),
               border: OutlineInputBorder(),
               labelText: 'Password'), 
-              obscureText: true), 
+              obscureText: obscureText),
               
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: RichText(text: TextSpan(
+                children: [
+                  TextSpan(text: "forget password?",style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.blue,
+                    decorationThickness: 2,
+                    color: Colors.blue,
+                  ),
+                  recognizer: TapGestureRecognizer()..onTap = (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPage(),));
+                  }
+                  ),
+
+                ]
+              )),
+            ),
             SizedBox(height: 20),
 
             RichText(text: TextSpan(text: 'Don\'t have an account? ', style: TextStyle(color: Colors.black), children: [
@@ -103,10 +146,11 @@ class _LogInPageState extends State<LogInPage> {
                         email: emailController.text.trim(),
                         password: passwordController.text.trim());
 
-                        await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('Successfully LogIn',
                         style: TextStyle(color: Colors.green),),
                       duration: Duration(seconds: 1),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
                   }catch(e)
                   {e.toString();}
                 }else{

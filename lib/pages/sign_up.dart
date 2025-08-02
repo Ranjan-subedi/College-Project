@@ -22,7 +22,20 @@ class _SignUpState extends State<SignUp> {
 
   @override 
   Widget build(BuildContext context) {
-    return Scaffold(body: 
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Application",
+            style: TextStyle(
+              fontSize: 24,
+              letterSpacing: 1.7,
+              fontWeight: FontWeight.bold,
+            ),),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body:
     Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

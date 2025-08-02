@@ -22,12 +22,10 @@ class FirebaseServices{
   }
 
 
-
-
   Future login({required String email, required String password})async{
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
+          email: email.trim().toLowerCase(),
           password: password
       );
       return credential.user;
@@ -41,6 +39,17 @@ class FirebaseServices{
       }
     }
   }
+
+  Future sendPasswordResetEmail({required String email})async{
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim().toLowerCase());
+
+    }
+    catch(e){
+      e.toString();
+    }
+  }
+
 
 
 
